@@ -24,10 +24,10 @@ ENV \
 
 
 ###################
-# Setup Bazel 0.4.5
+# Setup Bazel 0.7.0
 ###################
 ENV \
-  BAZEL_VERSION=0.4.5 
+  BAZEL_VERSION=0.7.0 
 
 # Running bazel inside a `docker build` command causes trouble, cf:
 #   https://github.com/bazelbuild/bazel/issues/134
