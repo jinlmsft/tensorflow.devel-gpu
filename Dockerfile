@@ -158,7 +158,7 @@ ENV \
   TENSORFLOW_HOME=/root/tensorflow
 
 # Need this inside Docker for nvidia-docker build step HACK
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
 RUN \
   mkdir -p /usr/local/nvidia/lib64/ \
   && cd /usr/local/nvidia/lib64/ \
@@ -179,7 +179,7 @@ ENV TF_NEED_HDFS=1
 ENV TF_NEED_OPENCL=0
 ENV TF_ENABLE_XLA=1
 ENV TF_CUDA_VERSION=8.0
-ENV TF_CUDNN_VERSION=5
+ENV TF_CUDNN_VERSION=6
 ENV CUDA_PATH="/usr/local/cuda"
 ENV CUDA_TOOLKIT_PATH=$CUDA_PATH
 ENV CUDNN_INSTALL_PATH=$CUDA_PATH
