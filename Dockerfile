@@ -137,6 +137,7 @@ RUN \
   && tensorflow/tools/ci_build/builds/configured GPU
 
 # Needed for bazel build
+ENV LIBRARY_PATH /usr/lib/x86_64-linux-gnu/:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
 
 RUN \
