@@ -136,6 +136,9 @@ RUN \
   cd $TENSORFLOW_SERVING_HOME/tensorflow \
   && tensorflow/tools/ci_build/builds/configured GPU
 
+# Needed for bazel build
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+
 RUN \
   cd $TENSORFLOW_SERVING_HOME \
   # Remove NCCL since it isn't building properly
@@ -158,7 +161,6 @@ ENV \
   TENSORFLOW_HOME=/root/tensorflow
 
 # Need this inside Docker for nvidia-docker build step HACK
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
 RUN \
   mkdir -p /usr/local/nvidia/lib64/ \
   && cd /usr/local/nvidia/lib64/ \
