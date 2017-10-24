@@ -145,25 +145,20 @@ WORKDIR $TENSORFLOW_SERVING_HOME
 # Remove NCCL since it isn't building properly
 RUN sed -i.bak '/nccl/d' tensorflow/tensorflow/contrib/BUILD 
 
-RUN ln -s ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.6 /usr/local/cuda/targets/x86_64-linux/lib
-
-# Build tensor flow serving. 
-
-# Unable to build tensorflow serving.
-# RUN bazel build -c opt --config=cuda \
-#      --verbose_failures \
-#      --spawn_strategy=standalone --genrule_strategy=standalone \
-#      --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.1 --copt=-msse4.2 \
-#      --crosstool_top=@local_config_cuda//crosstool:toolchain \
-#      tensorflow_serving/model_servers:tensorflow_model_server \
-#  && chmod a+x bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server \
-#  && cp bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server /usr/local/bin/ \
+RUN bazel build -c opt --config=cuda \
+      --verbose_failures \
+      --spawn_strategy=standalone --genrule_strategy=standalone \
+      --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.1 --copt=-msse4.2 \
+      --crosstool_top=@local_config_cuda//crosstool:toolchain \
+      tensorflow_serving/model_servers:tensorflow_model_server \
+  && chmod a+x bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server \
+  && cp bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server /usr/local/bin/ \
+  && bazel clean --expunge
 
 
 ##################
 # Build TensorFlow
 ##################
-WORKDIR /root
 ENV \
   TENSORFLOW_HOME=/root/tensorflow
 
